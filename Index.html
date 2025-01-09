@@ -1,0 +1,646 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <script src="external/splide.min.js"></script>
+    <link href="external/splide.min.css" rel="stylesheet" />
+    <title>Responsive HTML Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Carlito", serif;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Top contact bar */
+        .top-bar {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            color: white;
+            z-index: 10; /* Ensures header is above other elements */
+        }
+
+            .top-bar .contacts {
+                text-shadow: 1px 1px 2px black;
+            }
+
+            .top-bar .container {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-top: 15px;
+            }
+
+            .top-bar span {
+                display: flex;
+                align-items: center;
+            }
+
+                .top-bar span i {
+                    margin-right: 0.5rem;
+                }
+
+            .top-bar .email {
+                padding-left: 15px;
+            }
+
+        /* Header positioned absolutely and on top */
+        header {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            color: white;
+            z-index: 10; /* Ensures header is above other elements */
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: row;
+        }
+
+            .nav-menu a {
+                color: white;
+                text-decoration: none;
+                padding: 0.5rem;
+                text-shadow: 1px 1px 2px black;
+            }
+
+                .nav-menu a:hover {
+                    color: #B4121B;
+                }
+
+        /* Hamburger menu toggle for mobile */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+            .menu-toggle div {
+                background: white;
+                height: 3px;
+                margin: 5px 0;
+                width: 25px;
+            }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+            }
+
+                .nav-menu.active {
+                    display: flex;
+                }
+        }
+
+        /* Slider section styling */
+        .slider {
+            position: relative;
+            overflow: hidden;
+            height: 500px;
+        }
+
+        .slider-title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 4rem;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-shadow: 1px 1px 6px black;
+            line-height: 4.5rem;
+            width: 100%;
+            max-width: 1440px;
+        }
+
+            .slider-title .main-text {
+                color: #B4121B;
+                font-size: 5.5rem;
+            }
+
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 500px;
+            background-size: cover;
+            background-position: center;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.75) 5%, rgba(0, 0, 0, 0.5)), url(images/foundation_slab.jpg);
+        }
+
+        /* Updated Sections Styling */
+        .sections-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            position: relative;
+            height: 300px;
+            padding: 0 1rem;
+            top: -30px;
+            z-index: 2;
+        }
+
+        .sections {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            align-items: center;
+            height: 100%;
+            gap: 3rem;
+        }
+
+        .section {
+            flex: 1;
+            background: #f4f4f4;
+            text-align: center;
+            transition: flex 0.4s ease, background-color 0.4s ease, color 0.4s ease;
+            cursor: pointer;
+            padding: 1.5rem 2rem;
+            position: relative;
+            height: 100%;
+            transition: 0.4s ease;
+            border-radius: 10px;
+            min-width: 300px;
+        }
+
+            .section i {
+                font-size: 2rem;
+                margin-bottom: 0.5rem;
+                display: block;
+            }
+
+            .section h3 {
+                white-space: normal; /* Allow the title to wrap */
+                word-wrap: break-word; /* Break long words to fit within the box */
+                font-size: 1.75rem;
+            }
+
+            .section p {
+                font-size: 1rem;
+                text-overflow: ellipsis;
+                height: 75px;
+            }
+
+            .section .read-more {
+                font-size: 0.8rem;
+                color: #B4121B;
+                font-weight: bold;
+                margin-top: 0.5rem;
+                display: inline-block;
+            }
+
+            .section img {
+                width: 100px;
+            }
+
+                .section img.normal {
+                    display: inline-block;
+                }
+
+                .section img.invert {
+                    display: none;
+                }
+
+            .section.active {
+                background: #B4121B;
+                color: white;
+            }
+
+                .section.active img.normal {
+                    display: none;
+                }
+
+                .section.active img.invert {
+                    display: inline-block;
+                }
+
+                .section.active .read-more {
+                    display: none;
+                }
+
+        .tab-buttons {
+            display: flex;
+            justify-content: space-around;
+            list-style: none;
+        }
+
+            .tab-buttons li {
+                padding: 0.5rem 1rem;
+                cursor: pointer;
+                background: #eee;
+                transition: background 0.3s;
+                flex: 1;
+                font-size: 1.75rem;
+                font-weight: 700;
+                text-align: center;
+            }
+
+                .tab-buttons li:first-child {
+                    border-start-start-radius: 10px;
+                }
+
+                .tab-buttons li:last-child {
+                    border-start-end-radius: 10px;
+                }
+
+                .tab-buttons li.active {
+                    background: #B4121B;
+                    color: white;
+                }
+
+                .tab-buttons li:hover:not(.active) {
+                    background: #ccc;
+                }
+
+        .tab-content {
+            background: #B4121B;
+            padding: 1rem;
+            border-radius: 5px;
+            color: white;
+            min-height: 330px;
+        }
+
+            .tab-content .text {
+                margin: 1rem 2rem;
+                font-size: 1.3rem;
+            }
+
+                .tab-content .text li {
+                    margin-left: 2rem;
+                }
+
+        .tab {
+            display: none;
+        }
+
+            .tab.active {
+                display: block;
+            }
+
+        .tabs-container {
+            display: flex;
+            flex-direction: column;
+            margin-top: 3rem;
+        }
+
+            .tabs-container .container {
+                width: 100%;
+            }
+
+        /* Introduction text section */
+        .about {
+            background-color: #fff;
+            padding: 2rem 0;
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+            .about h2 {
+                font-size: 3.5rem;
+                margin-bottom: 1rem;
+                color: #B4121B;
+            }
+
+            .about p {
+                font-size: 1.05rem;
+                line-height: 1.8;
+                margin-bottom: 1rem;
+                color: #333;
+            }
+
+            .about .sign {
+                font-size: 1.25rem;
+                font-weight: 700;
+            }
+
+            .about .worker {
+                display: flex;
+                justify-content: center;
+                align-content: center;
+                align-items: center;
+                gap: 1rem;
+            }
+
+                .about .worker img {
+                    border: 2px solid black;
+                    border-radius: 50px;
+                }
+
+        .gallery {
+            text-align: center;
+        }
+
+            .gallery h2 {
+                font-size: 3.5rem;
+                padding-top: 4rem;
+                margin-bottom: 1rem;
+                color: #B4121B;
+            }
+
+        /* Footer styling */
+        footer {
+            background: #333;
+            color: white;
+            padding: 1rem;
+        }
+
+        .footer-columns {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .footer-column {
+            width: 30%;
+        }
+
+        iframe {
+            width: 100%;
+            height: 150px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top contact bar -->
+    <div class="top-bar">
+        <div class="container">
+            <span class="contacts">
+                <span class="phone"><i>&#9742;</i> +123 456 7890</span>
+                <span class="email"><i>&#9993;</i> contact@example.com</span>
+            </span>
+            <div class="nav-container">
+                <!-- Hamburger menu toggle for smaller screens -->
+                <div class="menu-toggle" id="mobile-menu">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <!-- Navigation menu -->
+                <nav class="nav-menu" id="nav-menu">
+                    <a href="#">HOME</a>
+                    <a href="#">ABOUT</a>
+                    <a href="#">SERVICES</a>
+                    <a href="#">CONTACT</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image slider section -->
+    <div class="slider">
+        <div class="slider-title">KVALITNÍ <br /><span class="main-text">ZÁKLADOVÉ DESKY</span><br /> NA KLÍČ</div>
+        <div class="slides" id="slides">
+            <div class="slide"></div>
+        </div>
+    </div>
+
+    <!-- Section boxes -->
+    <div class="sections-container">
+        <div class="sections">
+            <div class="section active" onclick="makeActive(this)">
+                <img class="normal" src="images/foundation.png"></img>
+                <img class="invert" src="images/foundation_invert.png"></img>
+                <h3>ZÁKLADOVÉ DESKY</h3>
+                <p>Profesionální realizace základových desek pro rodinné domy, garáže, pergoly a další stavby.</p>
+            </div>
+            <div class="section" onclick="makeActive(this)">
+                <img class="normal" src="images/road.png"></img>
+                <img class="invert" src="images/road_invert.png"></img>
+                <h3>ZÁMKOVÉ DLAŽBY</h3>
+                <p>Pokládka zámkové dlažby včetně obrubníků a podkladů pro kompletní řešení na klíč.</p>
+            </div>
+            <div class="section" onclick="makeActive(this)">
+                <img class="normal" src="images/wall.png"></img>
+                <img class="invert" src="images/wall_invert.png"></img>
+                <h3>OPLOCENÍ</h3>
+                <p>Montáž PVC, 2D, 3D oplocení, podhrabových desek i zděných a betonových plotů.</p>
+            </div>
+            <div class="section" onclick="makeActive(this)">
+                <img class="normal" src="images/construction.png"></img>
+                <img class="invert" src="images/construction_invert.png"></img>
+                <h3>ZEMNÍ PRÁCE</h3>
+                <p>Terénní úpravy, svody, vsakování, ČOV a retenční nádrže pro komplexní řešení vašich projektů.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="about">
+        <h2>O nás</h2>
+        <p>
+            Naše firma se specializuje na širokou škálu stavebních prací, jako jsou výstavba základových desek,
+            pokládka dlažby, stavba plotů a terénní a výkopové práce. Působím v tomto oboru už více než 10 let
+            a během této doby jsem si vybudoval silnou základnu spokojených zákazníků, kteří se na mě pravidelně
+            obracejí díky kvalitní práci a profesionálnímu přístupu.
+        </p>
+        <p>
+            I když naše působnost je zaměřena především na oblast Třince a Frýdecko-Místeckého okresu, jsem
+            schopen vyhovět individuálním požadavkům a nabídnout naše služby po celé České republice.
+        </p>
+        <p>
+            Pokud hledáte spolehlivého partnera pro vaše stavební projekty, neváhejte mě kontaktovat. Rád vám
+            připravím nabídku na míru.
+        </p>
+        <div class="worker">
+            <img class="normal" src="images/worker.png" width="64"></img>
+            <div class="sign">Vojtěch Karch</div>
+        </div>
+    </div>
+
+    <div class="tabs-container">
+        <div class="container">
+            <div class="tabs">
+                <ul class="tab-buttons">
+                    <li data-tab="tab1" class="active">Základové desky</li>
+                    <li data-tab="tab2">Zámkové dlažby</li>
+                    <li data-tab="tab3">Zemní práce</li>
+                    <li data-tab="tab4">Oplocení</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="tab-content">
+            <div id="tab1" class="tab active container">
+                <div class="text">
+                    <p>Specializujeme se na realizaci základových desek pro různé typy staveb, včetně:</p>
+                    <ul>
+                        <li>Rodinných domů</li>
+                        <li>Pergol</li>
+                        <li>Zahradních domků</li>
+                        <li>Garáží</li>
+                        <li>A dalších staveb</li>
+                    </ul>
+                    <p>Naše služby zahrnují kompletní proces od výkopových prací až po finální úpravy povrchu. Používáme kvalitní materiály a moderní technologie, abychom zajistili dlouhou životnost a stabilitu základů. Důraz klademe na přesnost a dodržování stavebních norem, což je klíčové pro bezpečnost a trvanlivost celé stavby.</p>
+                </div>
+            </div>
+            <div id="tab2" class="tab container">
+                <div class="text">
+                    <p>Nabízíme komplexní řešení pokládky zámkové dlažby, které zahrnuje:</p>
+                    <ul>
+                        <li>Přípravu podkladu</li>
+                        <li>Instalaci obrubníků</li>
+                        <li>Pokládku dlažby</li>
+                        <li>Finální úpravy povrchu</li>
+                    </ul>
+                    <p>Zámková dlažba je ideální volbou pro chodníky, terasy, příjezdové cesty a další plochy díky své odolnosti a estetickému vzhledu. Nabízíme široký výběr vzorů a barev, které lze přizpůsobit individuálním požadavkům klienta. Dbáme na správné provedení všech fází procesu, aby byla zajištěna dlouhá životnost a funkčnost dlažby.</p>
+                </div>
+            </div>
+            <div id="tab3" class="tab container">
+                <div class="text">
+                    <p>Poskytujeme široké spektrum zemních prací, včetně:</p>
+                    <ul>
+                        <li>Terénních úprav</li>
+                        <li>Výkopů pro inženýrské sítě</li>
+                        <li>Instalace svodů a vsakovacích systémů</li>
+                        <li>Montáže čistíren odpadních vod (ČOV)</li>
+                        <li>Zřizování retenčních nádrží</li>
+                    </ul>
+                    <p>Naše moderní technika a zkušený tým zajišťují efektivní a kvalitní provedení prací. Přizpůsobujeme se specifickým potřebám každého projektu a dbáme na dodržování všech bezpečnostních a environmentálních předpisů. Cílem je vytvořit stabilní a připravený terén pro následné stavební činnosti.</p>
+                </div>
+            </div>
+            <div id="tab4" class="tab container">
+                <div class="text">
+                    <p>Realizujeme různé typy oplocení dle požadavků klienta, jako například:</p>
+                    <ul>
+                        <li>PVC ploty</li>
+                        <li>2D a 3D pletiva</li>
+                        <li>Podhrabové desky</li>
+                        <li>Zděné ploty</li>
+                        <li>Betonové ploty</li>
+                    </ul>
+                    <p>Oplocení poskytuje nejen bezpečnost, ale také estetické ohraničení vašeho pozemku. Nabízíme poradenství při výběru nejvhodnějšího typu oplocení s ohledem na funkčnost, design a rozpočet. Zajišťujeme kompletní realizaci od návrhu až po montáž, s důrazem na kvalitu a dlouhou životnost výsledného díla.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container gallery">
+        <h2>Realizace</h2>
+        <section class="splide" aria-label="Splide Basic HTML Example">
+            <div class="splide__track">
+                <ul class="splide__list">
+                    <li class="splide__slide">Slide 01</li>
+                    <li class="splide__slide">Slide 02</li>
+                    <li class="splide__slide">Slide 03</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer section -->
+    <footer>
+        <div class="container footer-columns">
+            <div class="footer-column">
+                <h3>Address</h3>
+                <p>123 Main Street<br>City, Country 12345</p>
+            </div>
+            <div class="footer-column">
+                <h3>Map</h3>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12577.24781272099!2d-0.127758!3d51.507351!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0:0x0!2zMzXCsDMwJzQwLjEiTiAwwrAwNyc0NC44Ilc!5e0!3m2!1sen!2sus!4v1619200000000!5m2!1sen!2sus" allowfullscreen=""></iframe>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <p>Email: contact@example.com<br>Phone: +123 456 7890</p>
+            </div>
+        </div>
+        <a href="https://www.flaticon.com/free-icons/pavement" title="pavement icons">Pavement icons created by Leremy - Flaticon</a>
+    </footer>
+
+    <script>
+        // Mobile menu toggle functionality
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navMenu = document.getElementById('nav-menu');
+
+        mobileMenu.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.section');
+            let currentIndex = 0;
+
+            // Function to activate a section
+            function activateSection(index) {
+                sections.forEach((section, i) => {
+                    if (i === index) {
+                        section.classList.add('active');
+                    } else {
+                        section.classList.remove('active');
+                    }
+                });
+            }
+
+            // Activate the initial section
+            activateSection(currentIndex);
+
+            // Set initial delay for 5 seconds, then switch every 3 seconds
+            setTimeout(() => {
+                setInterval(() => {
+                    currentIndex = (currentIndex + 1) % sections.length; // Loop through sections
+                    activateSection(currentIndex);
+                }, 3000); // 3 seconds delay for each section after the first
+            }, 2000); // 2 seconds delay for the initial section
+        });
+
+        const tabs = document.querySelectorAll('.tab-buttons li');
+        const tabContents = document.querySelectorAll('.tab');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelector('.tab-buttons li.active').classList.remove('active');
+                document.querySelector('.tab.active').classList.remove('active');
+
+                tab.classList.add('active');
+                document.getElementById(tab.getAttribute('data-tab')).classList.add('active');
+            });
+        });
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var splide = new Splide('.splide');
+            splide.mount();
+        });
+
+        var elms = document.getElementsByClassName('splide');
+
+        for (var i = 0; i < elms.length; i++) {
+            new Splide(elms[i]).mount();
+        }
+    </script>
+
+</body>
+</html>
