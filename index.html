@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -37,6 +37,10 @@
         }
 
             .top-bar .contacts {
+                display: flex;
+                column-gap: 1rem;
+                padding-right: 1rem;
+                flex-wrap: wrap;
                 text-shadow: 1px 1px 2px black;
             }
 
@@ -56,9 +60,6 @@
                     margin-right: 0.5rem;
                 }
 
-            .top-bar .email {
-                padding-left: 15px;
-            }
 
         /* Header positioned absolutely and on top */
         header {
@@ -143,10 +144,34 @@
             max-width: 1440px;
         }
 
-            .slider-title .main-text {
-                color: #B4121B;
-                font-size: 5.5rem;
+        @media (max-width: 768px) {
+            .slider-title {
+                font-size: 3.5rem;
             }
+        }
+
+        @media (max-width: 400px) {
+            .slider-title {
+                font-size: 3rem;
+            }
+        }
+
+        .slider-title .main-text {
+            color: #B4121B;
+            font-size: 5.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .slider-title .main-text {
+                font-size: 4.5rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .slider-title .main-text {
+                font-size: 4rem;
+            }
+        }
 
         .slides {
             display: flex;
@@ -166,7 +191,7 @@
             max-width: 1440px;
             margin: 0 auto;
             position: relative;
-            height: 300px;
+            min-height: 300px;
             padding: 0 1rem;
             top: -30px;
             z-index: 2;
@@ -254,6 +279,7 @@
             display: flex;
             justify-content: space-around;
             list-style: none;
+            flex-wrap: wrap;
         }
 
             .tab-buttons li {
@@ -287,7 +313,6 @@
         .tab-content {
             background: #B4121B;
             padding: 1rem;
-            border-radius: 5px;
             color: white;
             min-height: 330px;
         }
@@ -319,10 +344,70 @@
                 width: 100%;
             }
 
+
+        .tabs-header {
+            position: relative;
+        }
+
+        .tab-toggle {
+            display: none;
+            width: 100%;
+            padding: 1rem 0.5rem;
+            background: #ddd;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px 5px 0 0;
+            background: #B4121B;
+            color: white;
+            font-size: 1.75rem;
+            font-weight: 700;
+            text-align: center;
+        }
+        .tab-buttons.show {
+            display: flex;
+        }
+            .tab-buttons.show li.active {
+                display: none;
+            }
+
+            .tab-toggle .arrow {
+                float: right;
+                transition: transform 0.3s;
+            }
+
+            .tab-toggle[aria-expanded="true"] .arrow {
+                transform: rotate(180deg);
+            }
+
+        .tab-toggle .arrow.up {
+            transform: rotate(180deg);
+        }
+
+        @media (max-width: 560px) {
+            .tab-buttons {
+                display: none;
+                flex-direction: column;
+            }
+
+                .tab-buttons li {
+                    border-radius: 0 !important;
+                    border-top: 1px solid lightgray;
+                }
+
+            .tab-toggle {
+                display: block;
+            }
+
+                .tab-toggle[aria-expanded="true"] + .tab-buttons {
+                    display: flex;
+                }
+        }
+
+
         /* Introduction text section */
         .about {
             background-color: #fff;
-            padding: 2rem 0;
+            padding: 2rem 1rem;
             text-align: center;
             max-width: 700px;
             margin: 0 auto;
@@ -380,10 +465,13 @@
         .footer-columns {
             display: flex;
             justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .footer-column {
-            width: 30%;
+            flex: 1;
+            min-width: 200px;
         }
 
         iframe {
@@ -482,7 +570,8 @@
 
     <div class="tabs-container">
         <div class="container">
-            <div class="tabs">
+            <div class="tabs-header">
+                <button class="tab-toggle">Základové desky <span class="arrow">&#9660;</span></button>
                 <ul class="tab-buttons">
                     <li data-tab="tab1" class="active">Základové desky</li>
                     <li data-tab="tab2">Zámkové dlažby</li>
@@ -589,6 +678,7 @@
             navMenu.classList.toggle('active');
         });
 
+        //SECTIONS
         document.addEventListener('DOMContentLoaded', () => {
             const sections = document.querySelectorAll('.section');
             let currentIndex = 0;
@@ -615,21 +705,53 @@
                 }, 3000); // 3 seconds delay for each section after the first
             }, 2000); // 2 seconds delay for the initial section
         });
+        //SECTIONS
 
-        const tabs = document.querySelectorAll('.tab-buttons li');
-        const tabContents = document.querySelectorAll('.tab');
+        //TABS
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabs = document.querySelectorAll('.tab-buttons li');
+            const tabContents = document.querySelectorAll('.tab');
+            const tabToggle = document.querySelector('.tab-toggle');
+            const tabButtons = document.querySelector('.tab-buttons');
+            const arrow = document.querySelector('.tab-toggle .arrow');
 
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelector('.tab-buttons li.active').classList.remove('active');
-                document.querySelector('.tab.active').classList.remove('active');
+            // Tab click event
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelector('.tab-buttons li.active').classList.remove('active');
+                    document.querySelector('.tab.active').classList.remove('active');
 
-                tab.classList.add('active');
-                document.getElementById(tab.getAttribute('data-tab')).classList.add('active');
+                    tab.classList.add('active');
+                    document.getElementById(tab.getAttribute('data-tab')).classList.add('active');
+
+                    // Update toggle button text
+                    tabToggle.innerHTML = tab.textContent + ' <span class="arrow">&#9660;</span>';
+
+                    // Hide tab buttons on selection (for small screens)
+                    if (window.innerWidth <= 560) {
+                        tabButtons.classList.remove('show');
+                        arrow.classList.remove('up');
+                    }
+                });
+            });
+
+            // Toggle button click event
+            tabToggle.addEventListener('click', () => {
+                tabButtons.classList.toggle('show');
+                arrow.classList.toggle('up');
+            });
+
+            // Ensure correct tab is displayed on window resize
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 560) {
+                    tabButtons.classList.remove('show');
+                    arrow.classList.remove('up');
+                }
             });
         });
+        //TABS
 
-
+        //SPLIDE
         document.addEventListener('DOMContentLoaded', function () {
             var splide = new Splide('.splide');
             splide.mount();
@@ -640,6 +762,7 @@
         for (var i = 0; i < elms.length; i++) {
             new Splide(elms[i]).mount();
         }
+        //SPLIDE
     </script>
 
 </body>
