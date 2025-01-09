@@ -455,6 +455,27 @@
                 color: #B4121B;
             }
 
+        .splide__slide img {
+            width: 100%;
+            height: auto;
+        }
+
+        .splide {
+            margin-bottom: 2.5rem;
+        }
+
+        .splide__pagination {
+            bottom: -1.5rem;
+        }
+
+        .splide__pagination__page.is-active {
+            background: #B4121B;
+        }
+
+        .splide__arrow {
+            background: #B4121B;
+        }
+
         /* Footer styling */
         footer {
             background: #333;
@@ -637,14 +658,67 @@
     </div>
 
 
-    <div class="container gallery">
+    <div class="gallery">
         <h2>Realizace</h2>
-        <section class="splide" aria-label="Splide Basic HTML Example">
+        <section id="main-carousel" class="splide" aria-label="My Awesome Gallery">
             <div class="splide__track">
                 <ul class="splide__list">
-                    <li class="splide__slide">Slide 01</li>
-                    <li class="splide__slide">Slide 02</li>
-                    <li class="splide__slide">Slide 03</li>
+                    <li class="splide__slide">
+                        <div class="splide__slide__container">
+                            <img src="images/realizace_1.jpg" />
+                            <div class="splide__slide__content">
+                                Hloubení základových pasů pomocí bagru pro stabilní a pevné základy budoucí stavby.
+                            </div>
+                        </div>
+                    </li>
+                    <li class="splide__slide">
+                        <div class="splide__slide__container">
+                            <img src="images/realizace_2.jpg" />
+                            <div class="splide__slide__content">
+                                Plnění vyhloubených základových pasů betonem pro zajištění nosné konstrukce stavby.
+                            </div>
+                        </div>
+                    </li>
+                    <li class="splide__slide">
+                        <div class="splide__slide__container">
+                            <img src="images/realizace_3.jpg" />
+                            <div class="splide__slide__content">
+                                Dokončená základová deska připravená pro další stavební práce na objektu.
+                            </div>
+                        </div>
+                    </li>
+                    <li class="splide__slide">
+                        <div class="splide__slide__container">
+                            <img src="images/realizace_4.jpg" />
+                            <div class="splide__slide__content">
+                                Realizace výkopu pro uložení elektrických kabelů zajišťujících přívod energie do objektu.
+                            </div>
+                        </div>
+                    </li>
+                    <li class="splide__slide">
+                        <div class="splide__slide__container">
+                            <img src="images/realizace_5.jpg" />
+                            <div class="splide__slide__content">
+                                Modelace terénu pro budoucí zahradu, včetně vyrovnání a přípravy půdy pro výsadbu.
+                            </div>
+                        </div>
+                    </li>
+                    <li class="splide__slide">
+                        <div class="splide__slide__container">
+                            <img src="images/realizace_6.jpg" />
+                            <div class="splide__slide__content">
+                                Realizace zahradních úprav včetně tvorby skalky pro estetické zkrášlení okolí domu.
+                            </div>
+                        </div>
+                    </li>
+                    <li class="splide__slide">
+                        <div class="splide__slide__container">
+                            <img src="images/realizace_7.jpg" />
+                            <div class="splide__slide__content">
+                                Instalace PVC oplocení poskytujícího trvanlivé a bezúdržbové ohraničení pozemku.
+                            </div>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </section>
@@ -752,16 +826,26 @@
         //TABS
 
         //SPLIDE
-        document.addEventListener('DOMContentLoaded', function () {
-            var splide = new Splide('.splide');
-            splide.mount();
+        var splide = new Splide('.splide', {
+            perPage: 2,
+            perMove: 1,
+            type: 'loop',
+            padding: "4rem",
+            gap: "2rem",
+            breakpoints: {
+                1440: {
+                    perPage: 1,
+                },
+                800: {
+                    perPage: 1,
+                    padding: "0rem",
+                    gap: "0rem",
+                },
+            },
         });
 
-        var elms = document.getElementsByClassName('splide');
 
-        for (var i = 0; i < elms.length; i++) {
-            new Splide(elms[i]).mount();
-        }
+        splide.mount();
         //SPLIDE
     </script>
 
